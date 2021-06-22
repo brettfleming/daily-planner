@@ -5,13 +5,18 @@ var today = moment();
 $("#currentDay").text(today.format("dddd MMMM Do YYYY"))
 
 day.forEach(function(currentHour) {
-    let row = $("<form>").addClass("row");
+    let row = $("<div>").addClass("row");
     let hourField = $("<div>").text(`${currentHour.hour}`).addClass("hour");
     let reminder = $("<div>").addClass("description");
     let data = $("<textarea>");
+    var saveButton = $("<h3> Save </h3>")
+    var save = $("<button>").addClass("saveBtn");
+
+
     $(".container").append(row);
+    save.append(saveButton); 
     reminder.append(data);
-    row.append(hourField, reminder);
+    row.append(hourField, reminder, save);
     
 });
 
