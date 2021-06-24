@@ -18,12 +18,15 @@ const timeOfDay = [
     "17"
 ]
 
+
 day.forEach(function(today) {
     let row = $("<div>").addClass("row");
     let hourClass = getHourClass(today.hourNumber)
     let timeblock = $("<div>").text(`${today.hour}`).addClass("hour")
     let reminder = $("<div>").addClass(" col-md-8 description").addClass(hourClass);
-    let data = $("<textarea>").addClass("col-md-12");
+    let data = $("<textarea>").addClass("col-md-12").attr("id", today.hourNumber);
+    let reminderdata = localStorage.getItem(today.hourNumber);
+    data.val(reminderdata);
     let saveButton = $("<h3> Save </h3>")
     let save = $("<button>").addClass("saveBtn");
    //appending all the elements together to give the planner its list like structure
@@ -37,6 +40,12 @@ day.forEach(function(today) {
      // this if statement changes the classes on the timeblocks to past present and future
      
 });
+function savefunc() {
+    const remindertext = $(this).siblings(".description").children().val();
+    const timeid = $(this).siblings(".description").children().attr("id");
+    console.log(remindertext);
+    localStorage.setItem(timeid, remindertext );
+}
 
 function getHourClass(hourNumber){
     if (hourNumber < parseInt(moment().format("HH"))) {
@@ -48,16 +57,5 @@ function getHourClass(hourNumber){
     }
 }
 
-// for (let i = 0; i < timeOfDay.length; i++) {
-//     let data = $("textarea")
-//     console.log(parseInt(timeOfDay[i]) + '|' + parseInt(moment().format("HH")) ) 
-//     if (parseInt(timeOfDay[i]) < parseInt(moment().format("HH"))) {
-//         data.addClass("past");
-//     } else if (parseInt(timeOfDay[i]) === parseInt(moment().format("HH"))) {
-//         data.addClass("present");
-//     } else if (parseInt(timeOfDay[i]) > parseInt(moment().format("HH") ))  {
-//         data.addClass("future");
-//     }
-//     console.log(timeOfDay[i]);
-// }
-// console.log(moment().format("HH"));
+$(".container").on('click', ".saveBtn", savefunc)
+
